@@ -1,3 +1,9 @@
+/* */
+const maxCost = 6000000; // Максимальная стоимость автомобиля
+const minCost = 1000000; // Минимальная стоимость автомобиля
+const maxMonth = 60; // Максимальный срок лизинга
+const minMonth = 1; // Минимальный срок лизинга
+
 /* Значения из текстовых инпутов */
 const totalCost = document.getElementById("total-price"),
    anInititalFee = document.getElementById("initial-fee"),
@@ -13,8 +19,11 @@ const totalCostRange = document.getElementById("total-price-range"),
 const totalAmountOfLeasing = document.getElementById("amount-of-leasing"),
    totalMonthlyPayment = document.getElementById("monthly-payment");
 
-/* Все range */
+/* Все input range */
 const inputsRange = document.querySelectorAll('.input-range');
+/* Все input */
+const totalPriceInput = document.querySelector('.input-total-price');
+const totalLeasingTerm = document.querySelector('.input-leasing-term');
 
 /* Итоговые рассчёты */
 const totalLeasingSumm = document.getElementById("amount-of-leasing");
@@ -22,23 +31,85 @@ const monthlyPayment = document.getElementById("monthly-payment");
 
 /* Назначение значений от range к обычным input */
 const assignValue = () => {
+   /* Из input range в обычный input */
    totalCost.value = totalCostRange.value; // Стоимость автомобиля
    anInititalFeeProcent.innerHTML = anInititalFeeRange.value; // Процент взноса
    anInititalFee.value = Math.round(Number(anInititalFeeProcent.innerHTML) / 100 * totalCost.value) // Первоначальный взнос
    leasingTerm.value = leasingTermRange.value; // Срок лизинга
+}
 
+/* Заливка Input Range */
+const fillRange = (elem) => {
+   for(let i = 0;i < elem.length; i++) {
+      newRange = (((elem[i].value - elem[i].min) * (100 - 0)) / (elem[i].max - elem[i].min)) + 0;
+      elem[i].style.background = 'linear-gradient(to right, #FF9514 0%, #FF9514 '+ newRange + '%, #E1E1E1 ' + newRange + '%, #E1E1E1 100%)';
+   }
 }
 
 /* Вызов функции для автоматической подстановки */
+fillRange(inputsRange);
 assignValue();
 
+/* Проходим по каждому input range */
 for (let input of inputsRange) {
    input.addEventListener('input', () => {
+      fillRange(inputsRange);
       assignValue();
       calculation(totalCost.value, anInititalFee.value, anInititalFeeProcent.innerHTML, leasingTerm.value);
    });
 }
 
+/* Input TotalCost */
+totalCost.addEventListener('change', function () {
+   if(totalCost.value > maxCost) {
+      totalCost.value = maxCost;
+   } else
+   if(totalCost.value < minCost) {
+      totalCost.value = minCost;
+   }
+});
+
+totalCost.addEventListener('input', function () {
+   inputsRange[0].value = totalCost.value;
+   fillRange(inputsRange);
+});
+
+totalCost.addEventListener('focus', () => {
+   totalPriceInput.style.backgroundColor = '#FFFFFF';
+   totalPriceInput.style.border = '1px solid #F3F3F4'
+});
+
+totalCost.addEventListener('blur', function () {
+   totalPriceInput.style.backgroundColor = '#F3F3F4';
+   totalPriceInput.style.border = 'none';
+})
+
+/* Input LeasingTerm */
+leasingTerm.addEventListener('change', function () {
+   if(leasingTerm.value > maxMonth) {
+      leasingTerm.value = maxMonth;
+   } else
+   if(leasingTerm.value < minMonth) {
+      leasingTerm.value = minMonth;
+   }
+});
+
+leasingTerm.addEventListener('input', function () {
+   inputsRange[2].value = leasingTerm.value;
+   fillRange(inputsRange);
+});
+
+leasingTerm.addEventListener('focus', () => {
+   totalLeasingTerm.style.backgroundColor = '#FFFFFF';
+   totalLeasingTerm.style.border = '1px solid #F3F3F4'
+});
+
+leasingTerm.addEventListener('blur', function () {
+   totalLeasingTerm.style.backgroundColor = '#F3F3F4';
+   totalLeasingTerm.style.border = 'none';
+})
+
+/* Функция расчёта договора лизинга */
 const calculation = (price = 1000000, initialFee = 420000, percent = 10, months = 20) => {
    /* Размер первоначального взноса(ПВ) */
    initialFee = Math.round(Number(percent) / 100 * price);
@@ -76,6 +147,7 @@ button.addEventListener('click', () => {
    }
 });
 
+/* Функция отправки данных на сервер */
 function sendJSON(price, initialFee, percent, months, totalSumm, monthPay) {
    setTimeout(50000);
    let xhr = new XMLHttpRequest();
@@ -89,7 +161,7 @@ function sendJSON(price, initialFee, percent, months, totalSumm, monthPay) {
       // если запрос принят и сервер ответил, что всё в порядке
       if (xhr.readyState === 4 && xhr.status === 200) {
          // выводим то, что ответил нам сервер — так мы убедимся, что данные он получил правильно
-         console.log(alert(this.responseText));
+         console.log(this.responseText, alert('Успешно!')); 
       }
    };
    // преобразуем наши данные JSON в строку

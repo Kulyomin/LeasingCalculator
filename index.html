@@ -24,35 +24,38 @@
             <!-- Инпут калькулятора стоимость -->
             <div class="calculator-input-wrapper">
                <h4 class="title">Стоимость автомобиля</h4>
-               <div class="input">
-                  <input id="total-price" type="number" min="1000000" max="6000000" value="3300000">
+               <div class="input input-total-price">
+                  <input class="default-input" id="total-price" type="number" min="1000000" max="6000000" value="3300000">
                   <h2>₽</h2>
                </div>
                <div class="input">
                   <input class="input-range" id="total-price-range" type="range" min="1000000" max="6000000">
+                  <div class="progress-bar"></div>
                </div>
             </div>
             <!-- Инпут калькулятора взнос -->
             <div class="calculator-input-wrapper">
                <h4 class="title">Первоначальный взнос</h4>
                <div class="input">
-                  <input id="initial-fee" class="fee" type="number" min="100000" max="3600000"
-                     value="420000">
+                  <input class="default-input" id="initial-fee" class="fee" type="number" min="100000" max="3600000"
+                     value="420000" readonly>
                   <h2 class="initial-fee-procent"><span id="initial-fee-procent">13</span><span>%</span></h2>
                </div>
                <div class="input">
-                  <input class="input-range" id="initial-fee-range" type="range" min="10" max="60">
+                  <input  class="input-range" id="initial-fee-range" type="range" min="10" max="60">
+                  <div class="progress-bar"></div>
                </div>
             </div>
             <!-- Инпут калькулятора срок -->
             <div class="calculator-input-wrapper">
                <h4 class="title">Срок лизинга</h4>
-               <div class="input">
-                  <input id="leasing-term" type="number" min="1" max="60" value="60">
+               <div class="input input-leasing-term">
+                  <input class="default-input" id="leasing-term" type="number" min="1" max="60" value="60">
                   <h2>мес.</h2>
                </div>
                <div class="input">
                   <input class="input-range" id="leasing-term-range" type="range" min="1" max="60">
+                  <div class="progress-bar"></div>
                </div>
             </div>
 

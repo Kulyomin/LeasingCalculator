@@ -76,12 +76,12 @@ totalCost.addEventListener('input', function () {
 
 totalCost.addEventListener('focus', () => {
    totalPriceInput.style.backgroundColor = '#FFFFFF';
-   totalPriceInput.style.border = '1px solid #F3F3F4'
+   totalPriceInput.style.outline = '1px solid #F3F3F4'
 });
 
 totalCost.addEventListener('blur', function () {
    totalPriceInput.style.backgroundColor = '#F3F3F4';
-   totalPriceInput.style.border = 'none';
+   totalPriceInput.style.outline = 'none';
 })
 
 /* Input LeasingTerm */
@@ -101,12 +101,12 @@ leasingTerm.addEventListener('input', function () {
 
 leasingTerm.addEventListener('focus', () => {
    totalLeasingTerm.style.backgroundColor = '#FFFFFF';
-   totalLeasingTerm.style.border = '1px solid #F3F3F4'
+   totalLeasingTerm.style.outline = '1px solid #F3F3F4'
 });
 
 leasingTerm.addEventListener('blur', function () {
    totalLeasingTerm.style.backgroundColor = '#F3F3F4';
-   totalLeasingTerm.style.border = 'none';
+   totalLeasingTerm.style.outline = 'none';
 })
 
 /* Функция расчёта договора лизинга */
